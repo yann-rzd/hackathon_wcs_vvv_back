@@ -1,4 +1,4 @@
-require('dotenv').db();
+require('dotenv').config();
 
 const getEnv = (varibale) => {
   const value = process.env[varibale];
