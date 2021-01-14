@@ -38,7 +38,7 @@ app.get('/product/price', async (req, res) => {
       })
   }
 })
-//
+
 app.get('/product/duration', async (req, res) => {
   try {
       const durationH = req.query.h;
