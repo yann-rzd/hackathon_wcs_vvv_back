@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/product', async (req, res) => {
+  console.log('object')
   try {
     const select = await connection.query('SELECT pdt.id, pdt.name, pdt.price, pdt.description, pdt.image, pdt.quantity, pdt.duration_effect, pwr.power, afEff.effect FROM product pdt JOIN power pwr ON pwr.id = pdt.power_id JOIN after_effect afEff ON afEff.id = pdt.after_effect_id');
     res.status(200).json(select[0]);
@@ -57,13 +58,13 @@ app.get('/product/duration', async (req, res) => {
   }
 })
 
-app.get('/product/:id', async (req, res) => {
+app.get('/product/:slug', async (req, res) => {
   try {
-    const productId = req.params.id;
-    console.log(productId);
+    const productSlug = req.params.slug;
+    console.log(productSlug);
     const selectOne = await connection.query(
-      'SELECT pdt.id, pdt.name, pdt.price, pdt.description, pdt.image, pdt.quantity, pdt.duration_effect, pwr.power, afEff.effect FROM product pdt JOIN power pwr ON pwr.id = pdt.power_id JOIN after_effect afEff ON afEff.id = pdt.after_effect_id WHERE pdt.id = ?',
-      productId
+      'SELECT pdt.slug, pdt.name, pdt.price, pdt.description, pdt.image, pdt.quantity, pdt.duration_effect, pwr.power, afEff.effect FROM product pdt JOIN power pwr ON pwr.id = pdt.power_id JOIN after_effect afEff ON afEff.id = pdt.after_effect_id WHERE pdt.slug = ?',
+      productSlug
       );
     res.status(200).json(selectOne[0]);
   } catch (err) {
